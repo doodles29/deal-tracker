@@ -1,0 +1,41 @@
+name: Check prices
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours
+  workflow_dispatch:           # "Run workflow" button
+  push:
+    paths: ["products.json"]   # pick up new products straight away
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check-prices
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Check prices and alert
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          python seed.py
+          python check.py
+      - name: Build the page
+        run: python build_site.py
+      - name: Save history and page
+        run: |
+          git config user.name "deal-tracker bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add deals.db docs
+          git diff --cached --quiet || git commit -m "Update prices"
+          git push

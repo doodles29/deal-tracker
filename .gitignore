@@ -1,0 +1,4 @@
+ntfy_topic.txt
+check.log
+__pycache__/
+*.pyc

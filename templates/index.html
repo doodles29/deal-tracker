@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deal Tracker</title>
+<meta name="theme-color" content="#1f1b2e">
+<link rel="manifest" href="{% if static_mode %}manifest.json{% else %}{{ url_for('static', filename='manifest.json') }}{% endif %}">
+<style>
+  :root { --bg:#faf8f5; --card:#fff; --ink:#1f1b2e; --mute:#6b6678; --line:#e8e3da; --good:#0a7d4f; --goodbg:#e3f5ec; --warn:#a15c00; --accent:#6a3df0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14121c; --card:#1e1b2b; --ink:#f1eefb; --mute:#a29cb8; --line:#322e44; --good:#4cd69b; --goodbg:#16352a; --warn:#f0b04a; --accent:#a58bff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:16px; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+  h1 { font-size:1.4rem; margin:0; }
+  button { font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px; padding:8px 12px; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button.link { border:0; background:none; color:var(--mute); padding:2px 6px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; }
+  .brand { color:var(--mute); font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; }
+  .name { font-weight:600; font-size:1.05rem; }
+  .top { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
+  .best { background:var(--goodbg); color:var(--good); border-radius:8px; padding:6px 10px; margin:10px 0; font-weight:600; }
+  .none { color:var(--mute); margin:10px 0; }
+  .row { display:grid; grid-template-columns:1fr auto; gap:2px 10px; padding:10px 0; border-top:1px solid var(--line); align-items:center; }
+  .retailer { font-weight:500; }
+  .retailer a { color:var(--ink); }
+  .price { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+  .was { color:var(--mute); text-decoration:line-through; font-weight:400; margin-right:6px; }
+  .sub { color:var(--mute); font-size:.85rem; grid-column:1 / -1; }
+  .tag { display:inline-block; font-size:.75rem; border-radius:99px; padding:1px 8px; background:var(--goodbg); color:var(--good); margin-left:6px; }
+  .tag.warn { background:transparent; border:1px solid var(--line); color:var(--warn); }
+  details { margin-top:10px; }
+  summary { cursor:pointer; color:var(--mute); }
+  form.inline { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  input { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); flex:1 1 140px; min-width:0; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Deal Tracker</h1>
+    {% if static_mode %}<span class="sub">Updated {{ built }}</span>
+    {% else %}<form method="post" action="{{ url_for('run_check') }}"><button class="primary">Check all prices</button></form>{% endif %}
+  </header>
+
+  {% for item in products %}
+  <section class="card">
+    <div class="top">
+      <div><div class="brand">{{ item.p.brand }}</div><div class="name">{{ item.p.name }}</div></div>
+      {% if not static_mode %}<form method="post" action="{{ url_for('run_check') }}"><input type="hidden" name="product_id" value="{{ item.p.id }}"><button>Check</button></form>{% endif %}
+    </div>
+
+    {% if item.best %}
+      <div class="best">Best right now: £{{ '%.2f'|format(item.best.best) }} at {{ item.best.l.retailer }}{% if item.best.with_code %} (with code){% endif %}</div>
+    {% else %}
+      <div class="none">No prices yet. Press Check.</div>
+    {% endif %}
+
+    {% for x in item.listings %}
+    <div class="row">
+      <div class="retailer"><a href="{{ x.l.url }}" target="_blank" rel="noopener">{{ x.l.retailer }}</a>
+        {% if x.off_pct %}<span class="tag">{{ x.off_pct }}% off</span>{% endif %}
+        {% if x.cur and x.cur.price == x.low and x.history|length > 1 %}<span class="tag">lowest seen</span>{% endif %}
+        {% if x.cur and not x.cur.in_stock %}<span class="tag warn">out of stock</span>{% endif %}
+      </div>
+      <div class="price">
+        {% if x.cur %}
+          {% if x.off_pct %}<span class="was">£{{ '%.2f'|format(x.cur.rrp) }}</span>{% endif %}£{{ '%.2f'|format(x.cur.price) }}
+        {% elif x.l.auto %}<span class="sub">–</span>
+        {% else %}<a href="{{ x.l.url }}" target="_blank" rel="noopener">Check manually ↗</a>{% endif %}
+      </div>
+      {% if x.cur and x.cur.promo_text %}<div class="sub">Code offer: {{ x.cur.promo_text }}{% if x.with_code %} → about £{{ '%.2f'|format(x.with_code) }}{% endif %}</div>{% endif %}
+      {% if x.last and x.last.error and x.l.auto %}<div class="sub">Last check failed: {{ x.last.error }}</div>{% endif %}
+      {% if not x.l.auto %}<div class="sub">This retailer blocks automated checks.</div>{% endif %}
+      {% if x.cur %}<div class="sub">Checked {{ x.cur.checked_at }} UTC</div>{% endif %}
+    </div>
+    {% endfor %}
+
+    {% if not static_mode %}<details>
+      <summary>Add a retailer link</summary>
+      <form class="inline" method="post" action="{{ url_for('add_listing') }}">
+        <input type="hidden" name="product_id" value="{{ item.p.id }}">
+        <input name="url" type="url" placeholder="Paste the product page URL" required>
+        <button>Add</button>
+      </form>
+    </details>{% endif %}
+  </section>
+  {% endfor %}
+
+  {% if static_mode %}
+  <p class="sub">To track something new, edit <b>products.json</b> in the GitHub repo. The next scheduled run adds it.</p>
+  {% else %}
+  <section class="card">
+    <div class="name">Track another product</div>
+    <form class="inline" method="post" action="{{ url_for('add') }}">
+      <input name="brand" placeholder="Brand" required>
+      <input name="name" placeholder="Product" required>
+      <input name="url" type="url" placeholder="First retailer URL (optional)">
+      <button class="primary">Add</button>
+    </form>
+  </section>
+  {% endif %}
+</main>
+</body>
+</html>

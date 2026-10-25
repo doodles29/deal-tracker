@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deal Tracker</title>
+<meta name="theme-color" content="#1f1b2e">
+<link rel="manifest" href="manifest.json">
+<style>
+  :root { --bg:#faf8f5; --card:#fff; --ink:#1f1b2e; --mute:#6b6678; --line:#e8e3da; --good:#0a7d4f; --goodbg:#e3f5ec; --warn:#a15c00; --accent:#6a3df0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14121c; --card:#1e1b2b; --ink:#f1eefb; --mute:#a29cb8; --line:#322e44; --good:#4cd69b; --goodbg:#16352a; --warn:#f0b04a; --accent:#a58bff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:16px; }
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+  h1 { font-size:1.4rem; margin:0; }
+  button { font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px; padding:8px 12px; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button.link { border:0; background:none; color:var(--mute); padding:2px 6px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; }
+  .brand { color:var(--mute); font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; }
+  .name { font-weight:600; font-size:1.05rem; }
+  .top { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
+  .best { background:var(--goodbg); color:var(--good); border-radius:8px; padding:6px 10px; margin:10px 0; font-weight:600; }
+  .none { color:var(--mute); margin:10px 0; }
+  .row { display:grid; grid-template-columns:1fr auto; gap:2px 10px; padding:10px 0; border-top:1px solid var(--line); align-items:center; }
+  .retailer { font-weight:500; }
+  .retailer a { color:var(--ink); }
+  .price { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+  .was { color:var(--mute); text-decoration:line-through; font-weight:400; margin-right:6px; }
+  .sub { color:var(--mute); font-size:.85rem; grid-column:1 / -1; }
+  .tag { display:inline-block; font-size:.75rem; border-radius:99px; padding:1px 8px; background:var(--goodbg); color:var(--good); margin-left:6px; }
+  .tag.warn { background:transparent; border:1px solid var(--line); color:var(--warn); }
+  details { margin-top:10px; }
+  summary { cursor:pointer; color:var(--mute); }
+  form.inline { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  input { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); flex:1 1 140px; min-width:0; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Deal Tracker</h1>
+    <span class="sub">Updated 2026-10-25 11:43 UTC</span>
+    
+  </header>
+
+  
+  <section class="card">
+    <div class="top">
+      <div><div class="brand">Beauty of Joseon</div><div class="name">Relief Sun Aqua-Fresh Rice + B5 SPF50+ 50ml</div></div>
+      
+    </div>
+
+    
+      <div class="best">Best right now: £12.09 at LookFantastic (with code)</div>
+    
+
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.cultbeauty.co.uk/p/beauty-of-joseon-relief-sun-aqua-fresh-rice-b5-spf50-50ml/15821479/" target="_blank" rel="noopener">Cult Beauty</a>
+        
+        <span class="tag">lowest seen</span>
+        
+      </div>
+      <div class="price">
+        
+          £15.50
+        
+      </div>
+      
+      
+      
+      <div class="sub">Checked 2026-10-25 11:38:54 UTC</div>
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.lookfantastic.com/p/beauty-of-joseon-relief-sun-aqua-fresh-rice-b5-spf50-50ml/15821479/" target="_blank" rel="noopener">LookFantastic</a>
+        
+        <span class="tag">lowest seen</span>
+        
+      </div>
+      <div class="price">
+        
+          £15.50
+        
+      </div>
+      <div class="sub">Code offer: Save 22% | Use Code: FLASH22 → about £12.09</div>
+      
+      
+      <div class="sub">Checked 2026-10-25 11:38:50 UTC</div>
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.spacenk.com/uk/sun-tan/suncare/face-spf/relief-sun-aqua-fresh-%3A-rice-b5-MUK200062569.html" target="_blank" rel="noopener">Space NK</a>
+        
+        <span class="tag">lowest seen</span>
+        
+      </div>
+      <div class="price">
+        
+          £15.50
+        
+      </div>
+      
+      
+      
+      <div class="sub">Checked 2026-10-25 11:38:58 UTC</div>
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.boots.com/sitesearch?searchTerm=beauty+of+joseon+relief+sun+aqua-fresh" target="_blank" rel="noopener">Boots</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.boots.com/sitesearch?searchTerm=beauty+of+joseon+relief+sun+aqua-fresh" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.sephora.co.uk/search?q=beauty+of+joseon+relief+sun+aqua-fresh" target="_blank" rel="noopener">Sephora UK</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.sephora.co.uk/search?q=beauty+of+joseon+relief+sun+aqua-fresh" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+
+    
+  </section>
+  
+  <section class="card">
+    <div class="top">
+      <div><div class="brand">Merit</div><div class="name">Merit (any product)</div></div>
+      
+    </div>
+
+    
+      <div class="none">No prices yet. Press Check.</div>
+    
+
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.boots.com/sitesearch?searchTerm=merit+beauty" target="_blank" rel="noopener">Boots</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.boots.com/sitesearch?searchTerm=merit+beauty" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.meritbeauty.com/" target="_blank" rel="noopener">Merit</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.meritbeauty.com/" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.sephora.co.uk/search?q=merit+beauty" target="_blank" rel="noopener">Sephora UK</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.sephora.co.uk/search?q=merit+beauty" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+
+    
+  </section>
+  
+  <section class="card">
+    <div class="top">
+      <div><div class="brand">Olaplex</div><div class="name">No.3 Plus Complete Repair Treatment 100ml</div></div>
+      
+    </div>
+
+    
+      <div class="best">Best right now: £24.00 at LookFantastic</div>
+    
+
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.cultbeauty.co.uk/p/olaplex-no.3plus-complete-repair-treatment-250ml/17785880/?variation=17649955" target="_blank" rel="noopener">Cult Beauty</a>
+        
+        <span class="tag">lowest seen</span>
+        
+      </div>
+      <div class="price">
+        
+          £32.00
+        
+      </div>
+      
+      
+      
+      <div class="sub">Checked 2026-10-25 11:39:03 UTC</div>
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.lookfantastic.com/p/olaplex-no.3-plus-complete-repair-treatment-100ml/17649955/?variation=17649955" target="_blank" rel="noopener">LookFantastic</a>
+        <span class="tag">25% off</span>
+        <span class="tag">lowest seen</span>
+        
+      </div>
+      <div class="price">
+        
+          <span class="was">£32.00</span>£24.00
+        
+      </div>
+      
+      
+      
+      <div class="sub">Checked 2026-10-25 11:39:01 UTC</div>
+    </div>
+    
+    <div class="row">
+      <div class="retailer"><a href="https://www.boots.com/sitesearch?searchTerm=olaplex+no+3" target="_blank" rel="noopener">Boots</a>
+        
+        
+        
+      </div>
+      <div class="price">
+        <a href="https://www.boots.com/sitesearch?searchTerm=olaplex+no+3" target="_blank" rel="noopener">Check manually ↗</a>
+      </div>
+      
+      
+      <div class="sub">This retailer blocks automated checks.</div>
+      
+    </div>
+    
+
+    
+  </section>
+  
+
+  
+  <p class="sub">To track something new, edit <b>products.json</b> in the GitHub repo. The next scheduled run adds it.</p>
+  
+</main>
+</body>
+</html>

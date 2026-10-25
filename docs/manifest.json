@@ -1,0 +1,8 @@
+{
+  "name": "Deal Tracker",
+  "short_name": "Deals",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f1b2e",
+  "theme_color": "#1f1b2e"
+}
